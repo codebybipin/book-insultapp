@@ -8,13 +8,16 @@ public String generateInsult() {
 String vowels = "AEIOU";
 String article = "an";
 String theInsult = "";
+String databaseURL = null;
+String username = null;
+String password = null;
 try {
     
-String databaseURL = "jdbc:postgresql://";
+databaseURL = "jdbc:postgresql://";
 databaseURL += System.getenv("POSTGRESQL_SERVICE_HOST");
 databaseURL += "/" + System.getenv("POSTGRESQL_DATABASE");
-String username = System.getenv("POSTGRESQL_USER");
-String password = System.getenv("PGPASSWORD");
+username = System.getenv("POSTGRESQL_USER");
+password = System.getenv("PGPASSWORD");
 Connection connection = DriverManager.getConnection(databaseURL, username,
 password);
 if (connection != null) {
@@ -25,14 +28,15 @@ while (rs.next()) {
 if (vowels.indexOf(rs.getString("first").charAt(0)) == -1) {
 article = "a";
 }
-theInsult = String.format("Thou art %s %s %s %s!", article,
+theInsult = String.format("You  %s %s %s %s!", article,
 rs.getString("first"), rs.getString("second"), rs.getString("noun"));
 }
 rs.close();
 connection.close();
 }
 } catch (Exception e) {
-return "Database connection problem!";
+return databaseURL+" "+username+""+password+"Database connection problem!";
+
 }
 return theInsult;
 }
