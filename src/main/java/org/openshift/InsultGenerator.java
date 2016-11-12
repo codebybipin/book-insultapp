@@ -35,7 +35,8 @@ rs.close();
 connection.close();
 }
 } catch (Exception e) {
-return databaseURL+" "+username+""+password+"Database connection problem!";
+    e.printStackTrace();
+return databaseURL+" "+username+" "+password+" Database connection problem!";
 
 }
 return theInsult;
